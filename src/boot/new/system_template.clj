@@ -5,7 +5,7 @@
 
 (def lib-versions {:boot-reload "0.5.2"
                    :java-jdbc "0.7.3"
-                   :system "0.4.1"
+                   :system "0.4.2-SNAPSHOT"
                    :environ "1.1.0"
                    :tools-cli "0.3.5"
                    :ring-http-response "0.9.0"
@@ -22,8 +22,13 @@
   [name]
   (let [data {:name name
               :lib-versions lib-versions
-              :sanitized (name-to-path name)}]
+              :sanitized (name-to-path name)}
+        clj-src #(str "src/clj/" name "/" %)
+        cljs-src #(str "src/cljs/" name "/" %)]
     (println "Generating fresh 'boot new' system-template project.")
     (->files data
-             ["build.boot" (render "build.boot" data)])))
-             
+             ["build.boot" (render "build.boot" data)]
+             ["resources/index.html" (render "index.html" data)]
+             [(clj-src "core.clj") (render "core.clj" data)]
+             [(clj-src "routes.clj") (render "routes.clj" data)]
+             [(clj-src "systems.clj") (render "systems.clj" data)])))

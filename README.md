@@ -1,6 +1,7 @@
 # system-template
 
-A Leiningen template for FIXME.
+A Boot template for opinionated web app dev setup using
+[systems](https://github.com/danielsz/system) library.
 
 ## Usage
 
