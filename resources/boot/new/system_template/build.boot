@@ -1,8 +1,11 @@
 (def project '{{name}})
 (def version "0.1.0-SNAPSHOT")
 
-(set-env! :resource-paths #{"resources" "src/clj"}
-          :dependencies   '[[org.danielsz/system "{{lib-versions.system}}"]
+(set-env! :resource-paths {{{resource-paths}}}
+          :dependencies   '[[org.clojure/clojure "1.9.0"]
+                            [org.clojure/clojurescript "1.9.946"]
+                            [org.immutant/immutant "2.1.9"]
+                            [org.danielsz/system "{{lib-versions.system}}"]
                             [org.clojure/java.jdbc "{{lib-versions.java-jdbc}}"]
                             [org.clojure/tools.cli "{{lib-versions.tools-cli}}"]
                             [org.clojure/tools.logging "{{lib-versions.tools-logging}}"]
@@ -15,35 +18,23 @@
                             [ring/ring-defaults "{{lib-versions.ring-defaults}}"]
                             [ring-middleware-format "{{lib-versions.ring-middleware-format}}"]
                             [adzerk/boot-reload "{{lib-versions.boot-reload}}" :scope "test"]
-                            [adzerk/boot-test "{{lib-versions.boot-test}}" :scope "test"]])
+                            [adzerk/boot-test "{{lib-versions.boot-test}}" :scope "test"]
+                            {{{cljs-deps}}}])
 
 (require '[system.boot :refer [system run]]
          '[{{name}}.systems :refer [dev-system]]
-         '[adzerk.boot-reload :refer :all]
          '[clojure.edn :as edn]
          '[environ.core :refer [env]]
          '[environ.boot :refer [environ]])
-; 
-; (require '[ragtime.jdbc :as jdbc]
-;          '[ragtime.repl :as repl])
+
+{{{cljs-require}}}
 
 (task-options!
  aot {:namespace   #{'{{name}}.core}}
  jar {:main        '{{name}}.core
       :file        (str "{{name}}-" version "-standalone.jar")})
 
-(deftask dev
-  "run a restartable system"
-  []
-  (comp
-   (environ :env {:http-port "8080"})
-   (watch :verbose true)
-   (system :sys #'dev-system
-           :auto true
-           :files ["routes.clj" "systems.clj"])
-   (repl :server true
-         :host "127.0.0.1"
-         :port 8989)))
+{{{dev}}}
 
 (deftask build
   "Build the project locally as a JAR."

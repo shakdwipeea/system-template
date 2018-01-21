@@ -1,11 +1,16 @@
 (ns {{name}}.systems
   (:require [com.stuartsierra.component :as component]
             [environ.core :refer [env]]
-            [{{name}}.routes :refer [hello-routes]]
+            [{{name}}.routes :refer [hello-routes site]]
             [ring.middleware.format :refer [wrap-restful-format]]
-            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
+            [ring.middleware.defaults :refer [wrap-defaults
+                                              site-defaults
+                                              api-defaults]]
+            [ring.middleware.resource :refer [wrap-resource]]
+            [ring.middleware.not-modified :refer [wrap-not-modified]]
+            [ring.middleware.content-type :refer [wrap-content-type]]
             (system.components
-             [jetty :refer [new-jetty]]
+             [immutant-web :refer [new-immutant-web]]
              [endpoint :refer [new-endpoint]]
              [middleware :refer [new-middleware]]
              [repl-server :refer [new-repl-server]]
@@ -18,17 +23,7 @@
                          :formats [:json-kw]
                          :response-options {:json-kw {:pretty true}})))
 
-(defn dev-system []
-  (component/system-map
-   :hello (new-endpoint hello-routes)
-   :middleware (new-middleware
-                {:middleware  [rest-middleware
-                               [wrap-defaults api-defaults]]})
-   :handler (component/using
-             (new-handler)
-             [:hello :middleware])
-   :web (component/using (new-jetty :port (Integer. (env :http-port)))
-                         [:handler])))
+{{{dev-system}}}
 
 (defn prod-system
   "Assembles and returns components for a production deployment"

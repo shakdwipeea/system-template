@@ -1,5 +1,5 @@
 (ns {{name}}.routes
-  (:require [compojure.core :refer [routes GET]]
+  (:require [compojure.core :refer [routes GET ANY]]
             [ring.util.http-response :as response]))
 
 (defn ok-response [response]
@@ -8,4 +8,6 @@
 
 (defn hello-routes [_]
   (routes
-   (GET "/" [] (ok-response {:msg "Hello world!!"}))))
+   (GET "/hello" [] (ok-response {:msg "Hello world!!"}))))
+
+{{{site-routes}}}
