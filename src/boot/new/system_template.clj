@@ -31,17 +31,17 @@
 ;;                 :weasel "0.7.0"})
 
 (def cljs-deps "[reagent \"0.8.0-alpha2\"]
-                [reagi \"0.10.1\"]
-                [funcool/bide \"1.6.0\"]
-                [adzerk/boot-reload \"0.5.2\" :scope \"test\"]
-                [adzerk/boot-test \"1.2.0\" :scope \"test\"]
-                [adzerk/boot-cljs \"2.1.4\" :scope \"test\"]
-                [adzerk/boot-cljs-repl \"0.3.3\" :scope \"test\"]
-                [adzerk/boot-test \"1.2.0\" :scope \"test\"]
-                [adzerk/boot-reload \"0.5.2\" :scope \"test\"]
-                [com.cemerick/piggieback \"0.2.1\" :scope \"test\"]
-                [binaryage/devtools \"0.9.4\" :scope \"test\"]
-                [weasel \"0.7.0\" :scope \"test\"]")
+                            [reagi \"0.10.1\"]
+                            [funcool/bide \"1.6.0\"]
+                            [adzerk/boot-reload \"0.5.2\" :scope \"test\"]
+                            [adzerk/boot-test \"1.2.0\" :scope \"test\"]
+                            [adzerk/boot-cljs \"2.1.4\" :scope \"test\"]
+                            [adzerk/boot-cljs-repl \"0.3.3\" :scope \"test\"]
+                            [adzerk/boot-test \"1.2.0\" :scope \"test\"]
+                            [adzerk/boot-reload \"0.5.2\" :scope \"test\"]
+                            [com.cemerick/piggieback \"0.2.1\" :scope \"test\"]
+                            [binaryage/devtools \"0.9.4\" :scope \"test\"]
+                            [weasel \"0.7.0\" :scope \"test\"]")
 
 (defn cljs? [opts]
   (some #{"+cljs"} opts))
@@ -76,8 +76,8 @@
             :host \"127.0.0.1\")))")
 
 (def cljs-require-libs  "(require '[adzerk.boot-cljs :refer :all]
-                                  '[adzerk.boot-cljs-repl :refer :all]
-                                  '[adzerk.boot-reload :refer :all])")
+         '[adzerk.boot-cljs-repl :refer :all]
+         '[adzerk.boot-reload :refer :all])")
 
 (def clj-dev-system
   "(defn dev-system []
@@ -105,8 +105,8 @@
                                      [wrap-defaults api-defaults]]})
      :handler (component/using (new-handler) [:api-endpoint :site-endpoint])
      :api-server (component/using (new-immutant-web :port (Integer. (env :http-port)))
-                                  [:handler])))"
-)
+                                  [:handler])))")
+
 
 (def site-routes
   "(defn home-page []
@@ -117,8 +117,8 @@
   (defn site [_]
     (routes
      (GET \"/\" [] (home-page))
-     (ANY \"*\" [] (home-page))))"
-  )
+     (ANY \"*\" [] (home-page))))")
+  
 
 (defn system-template
   "FIXME: write documentation"
@@ -135,7 +135,7 @@
                             cljs-dev-system
                             clj-dev-system)
               :site-routes site-routes
-              :cljs-deps cljs-deps}
+              :cljs-deps (when (cljs? opts) cljs-deps)}
         clj-src #(str "src/clj/" (name-to-path name) "/" %)
         cljs-src #(str "src/cljs/" (name-to-path name) "/" %)]
     (println "Generating fresh 'boot new' system-template project.")
