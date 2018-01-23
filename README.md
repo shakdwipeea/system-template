@@ -12,7 +12,7 @@ A Boot template for opinionated web app dev setup using
 This will generate a reloadable clojure environment.
 
 ```shell
-boot -d boot/new new -t system-template -n <your-project-name> --snapshot
+boot -d boot/new new -t system-template -n <your-project-name>
 ```
 
 ### Clojurescript development
@@ -23,7 +23,7 @@ with [systems](https://github.com/danielsz/system) and front end hot reloading.
 Reagent setup including routing with [bide](https://github.com/funcool/bide). Server configuration for html5 routing(front end routing without #) is also included.
 
 ```shell
-boot -d boot/new new -t system-template -n <your-project-name> -a +cljs --snapshot
+boot -d boot/new new -t system-template -n <your-project-name> -a +cljs
 ```
 
 ## License
